@@ -1,9 +1,11 @@
-<div class="min-h-screen bg-black text-white">
-  <!-- Navbar -->
-  <spx-navbar />
+<div class="min-h-screen bg-black text-white relative overflow-hidden">
+  <div #stars class="fixed inset-0 z-0 pointer-events-none opacity-40 bg-cover bg-center"></div>
 
-  <!-- Page Content -->
-  <main class="p-10">
+  <div class="fixed w-full z-20">
+    <spx-navbar />
+  </div>
+
+  <main class="fixed top-24 left-0 right-0 bottom-0 p-10 z-10 overflow-y-auto">
     <router-outlet />
   </main>
 </div>
