@@ -5,6 +5,11 @@
     "packageManager": "pnpm"
   },
   "newProjectRoot": "projects",
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    }
+  },
   "projects": {
     "spacex-mission-control": {
       "projectType": "application",

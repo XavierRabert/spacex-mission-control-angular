@@ -5,7 +5,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   selector: 'spx-navbar',
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Navbar {}
