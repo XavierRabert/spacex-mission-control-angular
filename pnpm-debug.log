@@ -1,0 +1,45 @@
+---
+  0 debug pnpm:package-json: 
+    initial: 
+      name: "spacex-mission-control"
+      version: "0.0.0"
+      scripts: 
+        ng: "ng"
+        start: "ng serve"
+        build: "ng build"
+        watch: "ng build --watch --configuration development"
+        test: "ng test"
+      prettier: 
+        printWidth: 100
+        singleQuote: true
+        overrides: 
+          - 
+            files: "*.html"
+            options: 
+              parser: "angular"
+      private: true
+      packageManager: "pnpm@1.43.1"
+      dependencies: 
+        @angular/common: "^21.1.0"
+        @angular/compiler: "^21.1.0"
+        @angular/core: "^21.1.0"
+        @angular/forms: "^21.1.0"
+        @angular/platform-browser: "^21.1.0"
+        @angular/router: "^21.1.0"
+        rxjs: "~7.8.0"
+        tslib: "^2.3.0"
+      devDependencies: 
+        @angular/build: "^21.1.4"
+        @angular/cli: "^21.1.4"
+        @angular/compiler-cli: "^21.1.0"
+        @tailwindcss/postcss: "^4.1.12"
+        jsdom: "^27.1.0"
+        postcss: "^8.5.3"
+        tailwindcss: "^4.1.12"
+        typescript: "~5.9.2"
+        vitest: "^4.0.8"
+      gitHead: "70b19fa87ee78da698b45d4d94cfd3045b2a63dd"
+      readme: "# SpacexMissionControl\r\n\r\nThis project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4.\r\n\r\n## Development server\r\n\r\nTo start a local development server, run:\r\n\r\n```bash\r\nng serve\r\n```\r\n\r\nOnce the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.\r\n\r\n## Code scaffolding\r\n\r\nAngular CLI includes powerful code scaffolding tools. To generate a new component, run:\r\n\r\n```bash\r\nng generate component component-name\r\n```\r\n\r\nFor a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:\r\n\r\n```bash\r\nng generate --help\r\n```\r\n\r\n## Building\r\n\r\nTo build the project run:\r\n\r\n```bash\r\nng build\r\n```\r\n\r\nThis will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.\r\n\r\n## Running unit tests\r\n\r\nTo execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:\r\n\r\n```bash\r\nng test\r\n```\r\n\r\n## Running end-to-end tests\r\n\r\nFor end-to-end (e2e) testing, run:\r\n\r\n```bash\r\nng e2e\r\n```\r\n\r\nAngular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.\r\n\r\n## Additional Resources\r\n\r\nFor more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.\r\n"
+      readmeFilename: "README.md"
+      description: "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.4."
+      _id: "spacex-mission-control@0.0.0"
