@@ -1,0 +1,16 @@
+@if (!hasError()) {
+  <img
+    [src]="src()"
+    [alt]="alt()"
+    loading="lazy"
+    decoding="async"
+    (error)="onError()"
+    [class]="getClasses()"
+  />
+} @else {
+  <div
+    class="aspect-4/3 w-full min-h-48 flex items-center justify-center rounded-xl bg-gray-100 text-gray-500 text-3xl"
+  >
+    🚀 No image
+  </div>
+}

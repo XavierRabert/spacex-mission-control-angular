@@ -1,4 +1,4 @@
-<h1 class="text-4xl font-bold text-cyan-400 mb-8">🚀 Past Launches</h1>
+<spx-title text="PAST LAUNCHES" />
 
 @if (launches().error; as e) {
   <p class="text-red-400">Error loading launches: {{ e.message }}</p>
@@ -7,7 +7,7 @@
 @if (launches().value; as data) {
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
     @for (launch of data; track launch.id) {
-      <spx-launch-card [launch]="launch" />
+      <spx-launch-card [launch]="launch" (click)="onClickDetail(launch.id)" />
     }
   </div>
 }

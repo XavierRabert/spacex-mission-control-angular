@@ -17,7 +17,8 @@
     "baseUrl": ".",
     "paths": {
       "@features/*": ["src/app/features/*"],
-      "@layout/*": ["src/app/core/layout/*"]
+      "@layout/*": ["src/app/core/layout/*"],
+      "@directives/*": ["src/app/shared/directives/*"]
     }
   },
   "angularCompilerOptions": {
