@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 import { derivedAsync } from 'ngxtension/derived-async';
 import { catchError, map, of } from 'rxjs';
 import { LaunchesApiService } from 'src/app/core/api/launchesApiService';
@@ -38,14 +38,7 @@ export class LaunchDetailService {
     return this._rocketsService.getRocketById(id);
   });
 
-  public rocketName = derivedAsync(() => {
-    const id = this.launch()?.value?.rocket;
-    if (!id) return of(null);
-    return this._rocketsService.getRocketById(id).pipe(
-      map((l) => l.name),
-      catchError(() => of('Unknown')),
-    );
-  });
+  public rocketName = computed(() => this.rocket()?.value?.name);
 
   public setLaunchId(id: string) {
     this._launchId.set(id);

@@ -31,7 +31,9 @@ export class LaunchDetail {
 
   public missionStats = computed(() => {
     const launchData = this.launch()?.value;
-    return getMissionStats(launchData, this.launchpadName(), this.rocketName());
+    const launchpadName = this.launchpadName();
+    const rocketName = this.rocketName();
+    return getMissionStats(launchData, launchpadName, rocketName);
   });
 
   public resources = computed(() => {
