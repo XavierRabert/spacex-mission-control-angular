@@ -1,33 +1,94 @@
 <nav
-  class="flex items-center justify-between px-8 py-5 bg-zinc-950/80 backdrop-blur border-b border-cyan-500/20"
+  class="relative flex items-center justify-between px-6 py-4 bg-zinc-950/90 backdrop-blur-xl border-b border-cyan-400/20"
 >
-  <!-- Logo -->
-  <a routerLink="/" class="text-xl font-bold tracking-widest text-cyan-400"> 🚀 MISSION CONTROL </a>
+  <div
+    class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+  ></div>
 
-  <!-- Links -->
-  <div class="flex gap-6 text-sm font-medium text-zinc-300">
-    <a
-      routerLink="/launches"
-      routerLinkActive="text-cyan-400"
-      class="hover:text-cyan-300 transition"
+  <a routerLink="/" class="flex items-baseline gap-1">
+    <span class="text-xl font-black tracking-widest text-white">SPACE</span>
+    <span class="text-xl font-black tracking-widest text-cyan-400">X</span>
+    <span
+      class="hidden sm:inline text-xs font-semibold tracking-[0.3em] text-zinc-500 uppercase ml-2"
+      >Mission Control</span
     >
-      Launches
-    </a>
+  </a>
 
-    <a
-      routerLink="/rockets"
-      routerLinkActive="text-cyan-400"
-      class="hover:text-cyan-300 transition"
-    >
-      Rockets
-    </a>
-
-    <a
-      routerLink="/favorites"
-      routerLinkActive="text-cyan-400"
-      class="hover:text-cyan-300 transition"
-    >
-      Favorites
-    </a>
+  <div class="hidden md:flex items-center gap-1">
+    @for (link of links; track link.path) {
+      <a
+        spxTechBorder
+        [corners]="CornerStyle.ALL"
+        borderSize="sm"
+        [routerLink]="link.path"
+        routerLinkActive="text-cyan-400 border-cyan-400/50 bg-cyan-400/5"
+        class="px-5 py-2 text-zinc-400 hover:text-cyan-300 hover:border-cyan-400/30 hover:bg-cyan-400/5 border border-transparent tracking-widest uppercase text-xs transition-all duration-300"
+      >
+        {{ link.label }}
+      </a>
+    }
   </div>
+
+  <!-- Hamburger Mobile -->
+  <button
+    class="md:hidden flex flex-col gap-1.5 p-2 border border-cyan-400/30 hover:border-cyan-400/60 hover:bg-cyan-400/5 transition-all"
+    style="
+      clip-path: polygon(
+        0 0,
+        calc(100% - 6px) 0,
+        100% 6px,
+        100% 100%,
+        6px 100%,
+        0 calc(100% - 6px)
+      );
+    "
+    (click)="toggleMenu()"
+  >
+    <span
+      class="block w-5 h-px bg-cyan-400 transition-all duration-300"
+      [class.rotate-45]="menuOpen()"
+      [class.translate-y-2]="menuOpen()"
+    ></span>
+    <span
+      class="block w-5 h-px bg-cyan-400 transition-all duration-300"
+      [class.opacity-0]="menuOpen()"
+    ></span>
+    <span
+      class="block w-5 h-px bg-cyan-400 transition-all duration-300"
+      [class.-rotate-45]="menuOpen()"
+      [class.-translate-y-2]="menuOpen()"
+    ></span>
+  </button>
 </nav>
+
+@if (menuOpen()) {
+  <div
+    class="md:hidden fixed top-16.25 left-0 w-full bg-zinc-950/95 backdrop-blur-xl border-b border-cyan-400/20 z-50"
+  >
+    <div
+      class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/40 to-transparent"
+    ></div>
+    <div class="flex flex-col p-4 gap-2">
+      @for (link of links; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="text-cyan-400 bg-cyan-400/5"
+          class="px-4 py-3 text-zinc-400 hover:text-cyan-300 hover:bg-cyan-400/5 border border-cyan-400/20 hover:border-cyan-400/40 tracking-widest uppercase text-xs transition-all duration-300"
+          style="
+            clip-path: polygon(
+              0 0,
+              calc(100% - 8px) 0,
+              100% 8px,
+              100% 100%,
+              8px 100%,
+              0 calc(100% - 8px)
+            );
+          "
+          (click)="closeMenu()"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </div>
+  </div>
+}

@@ -24,17 +24,16 @@ export class Image {
   public getClasses() {
     const classes: string[] = [];
 
+    classes.push('w-full');
+    classes.push('h-full');
+
     if (this.variant() === ImageVariant.COVER) {
       classes.push('absolute');
       classes.push('inset-0');
-      classes.push('w-full');
-      classes.push('h-full');
       classes.push('object-cover');
-      classes.push('brightness-50');
+      classes.push('object-top');
     } else {
       classes.push('relative');
-      classes.push('w-64');
-      classes.push('h-64 ');
       classes.push('object-contain');
       classes.push('drop-shadow-[0_0_30px_rgba(0,255,255,0.3)]');
     }

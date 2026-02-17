@@ -3,28 +3,51 @@
   [corners]="CornerStyle.ALL"
   borderSize="lg"
   [showDecorations]="true"
-  class="group relative cursor-pointer bg-zinc-950/90 backdrop-blur-xl border border-cyan-400/30 filter drop-shadow-[0_0_8px_rgba(0,255,255,0.08)] hover:drop-shadow-[0_0_40px_rgba(0,255,255,0.8)] hover:border-cyan-400 hover:bg-zinc-900 transition-all duration-300 overflow-hidden h-full"
+  [hoverable]="true"
+  class="group relative cursor-pointer bg-zinc-950/90 backdrop-blur-xl border border-cyan-400/30 filter drop-shadow-[0_0_8px_rgba(0,255,255,0.08)] overflow-hidden h-full flex flex-col"
 >
-  <div class="relative z-10 p-4 pb-3 border-b border-cyan-400/20">
-    <h3 class="text-white font-bold text-lg tracking-wide mb-2">
+  <div
+    class="absolute bottom-0 left-0 w-0 group-hover:w-full h-px bg-linear-to-r from-cyan-400/0 via-cyan-400/60 to-cyan-400/0 transition-all duration-700 z-20"
+  ></div>
+
+  <div class="relative z-10 p-3 pb-2 border-b border-cyan-400/20">
+    <h3 class="text-white font-bold text-xs tracking-wide truncate mb-1">
       {{ launch().name }}
     </h3>
-    <div class="flex items-center justify-between text-sm">
-      <span class="text-zinc-400">
+    <div class="flex items-center justify-between">
+      <span class="text-zinc-500 text-xs sm:hidden">
+        {{ launch().date_utc | date: 'MMM yy' }}
+      </span>
+      <span class="text-zinc-500 text-xs hidden sm:block">
         {{ launch().date_utc | date: 'MMM d, yyyy' }}
       </span>
       <span
-        class="flex items-center gap-1.5 font-semibold text-xs"
+        class="flex items-center gap-1 font-semibold text-xs"
         [class.text-emerald-400]="launch().success"
         [class.text-red-400]="!launch().success"
       >
-        {{ launch().success ? '✔' : '❌' }}
-        {{ launch().success ? 'Success' : 'Failed' }}
+        {{ launch().success ? '✔' : '✖' }}
       </span>
     </div>
   </div>
 
-  <div class="p-8 flex items-center justify-center">
-    <spx-image [src]="launch().links.patch.small" alt="Launch" />
+  <div class="flex-1 flex items-center justify-center p-3 bg-black/20">
+    <div class="relative">
+      <div
+        class="absolute inset-0 bg-cyan-400/5 blur-xl group-hover:bg-cyan-400/10 transition-all duration-500"
+      ></div>
+      <spx-image
+        [src]="launch().links.patch.small"
+        alt="Launch"
+        class="relative w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-[0_0_10px_rgba(0,255,255,0.2)] group-hover:drop-shadow-[0_0_20px_rgba(0,255,255,0.4)] transition-all duration-500"
+      />
+    </div>
+  </div>
+
+  <div class="relative z-10 px-3 py-1.5 border-t border-cyan-400/10 flex items-center justify-end">
+    <span
+      class="text-cyan-400/30 group-hover:text-cyan-400/80 transition-colors duration-300 text-lg"
+      >›</span
+    >
   </div>
 </div>

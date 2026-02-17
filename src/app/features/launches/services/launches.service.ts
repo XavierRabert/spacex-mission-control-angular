@@ -3,16 +3,13 @@ import { PaginationKeys } from '@models/pagination';
 import { PaginationService } from '@shared/components/pagination/services/pagination.service';
 import { derivedAsync } from 'ngxtension/derived-async';
 import { map, tap } from 'rxjs';
-import { LaunchesApiService } from 'src/app/core/api/launchesApiService.service';
+import { LaunchesApiService } from 'src/app/core/api/launchesApiService';
 import { createSuspense, getSuspensifyInitialValues } from 'src/app/core/utils/suspense';
 
 @Injectable({ providedIn: 'root' })
 export class LaunchesService {
   private _launchesService = inject(LaunchesApiService);
   private _paginationService = inject(PaginationService);
-
-  private _launchId = signal<string | null>(null);
-  public launchId = this._launchId.asReadonly();
 
   private _currentPaginationKey = signal<PaginationKeys | undefined>(undefined);
   public readonly currentPaginationKey = this._currentPaginationKey.asReadonly();
@@ -43,20 +40,6 @@ export class LaunchesService {
       initialValue: getSuspensifyInitialValues([]),
     },
   );
-
-  public launchDetail = derivedAsync(
-    () => {
-      if (!this._launchId()) return;
-      return this._launchesService.getLaunchById(this._launchId()!);
-    },
-    {
-      initialValue: getSuspensifyInitialValues(undefined),
-    },
-  );
-
-  public setLaunchId(id: string) {
-    this._launchId.set(id);
-  }
 
   public setCurrentPaginationKey(key: PaginationKeys) {
     this._currentPaginationKey.set(key);

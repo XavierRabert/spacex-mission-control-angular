@@ -2,10 +2,12 @@ import { ChangeDetectionStrategy, Component, input, computed, inject, OnInit } f
 import { PaginationService } from './services/pagination.service';
 import { PaginationKeys } from '@models/pagination';
 import { TechBorderDirective } from '@directives/tech-border.directive';
-import { CornerStyle } from '@directives/models/tech.border';
+import { CornerStyle } from '@directives/models/types';
+
+const DEFAULT_LIMIT_OPTION = 10;
 
 @Component({
-  selector: 'pet-pagination',
+  selector: 'spx-pagination',
   standalone: true,
   imports: [TechBorderDirective],
   templateUrl: './pagination.html',
@@ -26,9 +28,11 @@ export class Pagination implements OnInit {
   public limit = computed(() => this._paginationConfig().pagination().limit);
   public totalPages = computed(() => this._paginationConfig().response().totalPages);
 
+  public DEFAULT_LIMIT_OPTION = DEFAULT_LIMIT_OPTION;
+
   public ngOnInit(): void {
     this._paginationService.setPageNum(this.key(), 1);
-    this._paginationService.setPageLimit(this.key(), 10);
+    this._paginationService.setPageLimit(this.key(), DEFAULT_LIMIT_OPTION);
   }
 
   public prev() {

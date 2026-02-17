@@ -1,15 +1,25 @@
-<spx-title text="PAST LAUNCHES" />
+<div class="space-y-8">
+  <spx-title text="PAST LAUNCHES" />
 
-@if (launches().error; as e) {
-  <p class="text-red-400">Error loading launches: {{ e.message }}</p>
-}
+  @if (launches().error; as e) {
+    <div
+      class="flex items-center gap-3 p-4 border border-red-400/30 bg-red-400/5 text-red-400 text-sm"
+      spxTechBorder
+      [corners]="CornerStyle.ALL"
+      [showDecorations]="true"
+      [borderDecorationsColor]="'border-red-600'"
+    >
+      ✖ Error: {{ e.message }}
+    </div>
+  }
 
-@if (launches().value; as data) {
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
-    @for (launch of data; track launch.id) {
-      <spx-launch-card [launch]="launch" (click)="onClickDetail(launch.id)" />
-    }
-  </div>
-}
+  @if (launches().value; as data) {
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-4">
+      @for (launch of data; track launch.id) {
+        <spx-launch-card #launchCard [launch]="launch" (click)="onClickDetail(launch.id)" />
+      }
+    </div>
+  }
 
-<pet-pagination [key]="currentPaginationKey()!" />
+  <spx-pagination [key]="currentPaginationKey()!" />
+</div>
