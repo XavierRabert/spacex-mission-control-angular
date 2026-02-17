@@ -1,3 +1,5 @@
+import { Launch } from '@models/launches/launchesList';
+
 export interface MissionStat {
   label: string;
   value: string | number;
@@ -11,12 +13,16 @@ export interface LaunchResource {
   subtitle: string;
 }
 
-export function getMissionStats(launch: any): MissionStat[] {
+export function getMissionStats(
+  launch: Launch,
+  launchpadName: string,
+  rocketName: string,
+): MissionStat[] {
   if (!launch) return [];
 
   return [
-    { label: 'ROCKET', value: launch.rocket },
-    { label: 'LAUNCHPAD', value: launch.launchpad || 'N/A' },
+    { label: 'ROCKET', value: rocketName },
+    { label: 'LAUNCHPAD', value: launchpadName || 'N/A' },
     { label: 'CORES', value: launch.cores?.length || 0 },
     { label: 'PAYLOADS', value: launch.payloads?.length || 0 },
   ];

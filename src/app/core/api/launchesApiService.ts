@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { BaseApiService } from './baseApiService.service';
+import { BaseApiService } from './baseApiService';
 import { Observable } from 'rxjs';
 import { createSuspense, Suspense } from '../utils/suspense';
 import { PaginatedResponse } from '../utils/paginated';
@@ -35,5 +35,9 @@ export class LaunchesApiService {
 
   public getLaunchById(id: string): Observable<Suspense<any>> {
     return createSuspense(this._api.get<any>(`${FEATURE_PATH}/${id}`));
+  }
+
+  public getLaunchpadById(id: string) {
+    return this._api.get<any>(`launchpads/${id}`);
   }
 }

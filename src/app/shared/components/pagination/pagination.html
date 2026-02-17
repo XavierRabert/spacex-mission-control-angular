@@ -1,9 +1,9 @@
-<div class="mt-10 flex items-center justify-center gap-4">
+<div class="mt-10 flex items-center justify-center gap-2 md:gap-4">
   <button
     spxTechBorder
     [corners]="CornerStyle.ALL"
     borderSize="sm"
-    class="flex h-12 w-12 items-center justify-center bg-zinc-950/80 border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/60 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+    class="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center bg-zinc-950/80 border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/60 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed text-lg"
     [disabled]="page() === 1"
     (click)="prev()"
   >
@@ -14,35 +14,41 @@
     spxTechBorder
     [corners]="CornerStyle.ALL"
     borderSize="sm"
-    class="flex items-center gap-6 bg-zinc-950/80 border border-cyan-400/30 px-8 py-3"
+    class="flex items-center gap-3 md:gap-6 bg-zinc-950/80 border border-cyan-400/30 px-4 md:px-8 py-3"
   >
-    <span class="text-sm tracking-widest text-zinc-400 uppercase">
-      Page
-      <span class="font-bold text-white mx-1">{{ page() }}</span>
-      of
-      <span class="font-bold text-white mx-1">{{ totalPages() }}</span>
+    <span class="text-xs md:text-sm tracking-widest text-zinc-400 uppercase whitespace-nowrap">
+      <span class="font-bold text-white">{{ page() }}</span>
+      <span class="text-zinc-600 mx-1">/</span>
+      <span class="font-bold text-white">{{ totalPages() }}</span>
     </span>
 
-    <div class="w-px h-6 bg-cyan-400/20"></div>
-
-    <div class="relative">
-      <select
-        spxTechBorder
-        [corners]="CornerStyle.ALL"
-        borderSize="sm"
-        class="h-9 w-36 appearance-none bg-black/40 border border-cyan-400/20 px-3 text-sm text-zinc-300 hover:border-cyan-400/50 focus:outline-none focus:border-cyan-400/60 transition-all cursor-pointer"
-        [value]="limit()"
-        (change)="changeLimit($event)"
-      >
-        @for (opt of limitOptions; track opt) {
-          <option class="bg-zinc-950 text-white" [value]="opt">{{ opt }} per page</option>
-        }
-      </select>
-      <span
-        class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400/50 text-xs"
-      >
-        ▼
-      </span>
+    <div class="hidden sm:flex items-center gap-3">
+      <div class="w-px h-6 bg-cyan-400/20"></div>
+      <div class="relative">
+        <select
+          spxTechBorder
+          [corners]="CornerStyle.ALL"
+          borderSize="sm"
+          class="h-9 w-32 md:w-36 appearance-none bg-black/40 border border-cyan-400/20 px-3 text-sm text-zinc-300 hover:border-cyan-400/50 focus:outline-none focus:border-cyan-400/60 transition-all cursor-pointer"
+          [value]="limit()"
+          (change)="changeLimit($event)"
+        >
+          @for (opt of limitOptions; track opt) {
+            <option
+              class="bg-zinc-950 text-white"
+              [value]="opt"
+              [selected]="opt === DEFAULT_LIMIT_OPTION"
+            >
+              {{ opt }} per page
+            </option>
+          }
+        </select>
+        <span
+          class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400/50 text-xs"
+        >
+          ▼
+        </span>
+      </div>
     </div>
   </div>
 
@@ -50,10 +56,31 @@
     spxTechBorder
     [corners]="CornerStyle.ALL"
     borderSize="sm"
-    class="flex h-12 w-12 items-center justify-center bg-zinc-950/80 border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/60 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed"
+    class="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center bg-zinc-950/80 border border-cyan-400/30 text-cyan-400 hover:bg-cyan-400/10 hover:border-cyan-400/60 transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed text-lg"
     [disabled]="page() === totalPages()"
     (click)="next()"
   >
     ›
   </button>
+</div>
+
+<div class="flex sm:hidden justify-center mt-3">
+  <div class="relative">
+    <select
+      class="h-9 w-36 appearance-none bg-zinc-950/80 border border-cyan-400/20 px-3 text-sm text-zinc-300 focus:outline-none cursor-pointer"
+      spxTechBorder
+      [corners]="CornerStyle.ALL"
+      borderSize="sm"
+      [value]="limit()"
+      (change)="changeLimit($event)"
+    >
+      @for (opt of limitOptions; track opt) {
+        <option class="bg-zinc-950 text-white" [value]="opt">{{ opt }} per page</option>
+      }
+    </select>
+    <span
+      class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-cyan-400/50 text-xs"
+      >▼</span
+    >
+  </div>
 </div>

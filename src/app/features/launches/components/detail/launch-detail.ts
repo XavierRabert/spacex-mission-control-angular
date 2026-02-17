@@ -1,14 +1,14 @@
 import { Component, computed, effect, inject, input, signal } from '@angular/core';
-import { LaunchesService } from '../../services/launches.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { TechBorderDirective } from '@directives/tech-border.directive';
-import { CornerStyle } from '@directives/models/tech.border';
+import { CornerStyle } from '@directives/models/types';
 import { LaunchStat } from 'src/app/shared/components/launch-stat/launch-stat';
 import { getLaunchResources, getMissionStats } from './models/launch-detail';
 import { Image } from 'src/app/shared/components/image/image';
 import { ImageVariant } from 'src/app/shared/components/image/models/variants';
 import { Title } from 'src/app/shared/components/title/title';
+import { LaunchDetailService } from './services/LaunchDetail';
 
 @Component({
   selector: 'spx-launch-detail',
@@ -17,16 +17,19 @@ import { Title } from 'src/app/shared/components/title/title';
   templateUrl: './launch-detail.html',
 })
 export class LaunchDetail {
-  private _launchesSercive = inject(LaunchesService);
+  private _launchDetailService = inject(LaunchDetailService);
   private _router = inject(Router);
 
   public id = input.required<string>();
 
-  public launch = this._launchesSercive.launchDetail;
+  public launch = this._launchDetailService.launch;
+  public launchpadName = this._launchDetailService.launchpadName;
+  public rocketName = this._launchDetailService.rocketName;
+  public rocket = this._launchDetailService.rocket;
 
   public missionStats = computed(() => {
     const launchData = this.launch()?.value;
-    return getMissionStats(launchData);
+    return getMissionStats(launchData, this.launchpadName(), this.rocketName());
   });
 
   public resources = computed(() => {
@@ -39,7 +42,7 @@ export class LaunchDetail {
 
   constructor() {
     effect(() => {
-      this._launchesSercive.setLaunchId(this.id());
+      this._launchDetailService.setLaunchId(this.id());
     });
   }
 

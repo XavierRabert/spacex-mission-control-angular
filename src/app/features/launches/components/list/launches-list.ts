@@ -5,10 +5,12 @@ import { Router } from '@angular/router';
 import { Pagination } from '@shared/components/pagination/pagination';
 import { Title } from '@shared/components/title/title';
 import gsap from 'gsap';
+import { CornerStyle } from '@directives/models/types';
+import { TechBorderDirective } from '@directives/tech-border.directive';
 
 @Component({
   selector: 'spx-launches-list',
-  imports: [LaunchCard, Title, Pagination],
+  imports: [LaunchCard, Title, Pagination, TechBorderDirective],
   templateUrl: './launches-list.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -18,6 +20,8 @@ export class LaunchesList {
 
   public launches = this._launchesService.launches;
   public currentPaginationKey = this._launchesService.currentPaginationKey;
+
+  public CornerStyle = CornerStyle;
 
   public onClickDetail(id: string) {
     this._router.navigate(['/launches', id]);
