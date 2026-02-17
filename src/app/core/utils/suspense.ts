@@ -1,5 +1,4 @@
-import { signal, WritableSignal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of, startWith } from 'rxjs';
 
 export interface Suspense<T> {
   isLoading: boolean;
@@ -9,39 +8,32 @@ export interface Suspense<T> {
   error: any;
 }
 
-export type SuspenseSignal<T> = WritableSignal<Suspense<T>>;
-
-export function createSuspense<T>(obs$: Observable<T>): SuspenseSignal<T> {
-  const state = signal<Suspense<T>>({
-    isLoading: true,
-    hasValue: false,
-    value: null,
-    hasError: false,
-    error: null,
-  });
-
-  obs$.subscribe({
-    next: (data) => {
-      state.set({
-        isLoading: false,
-        hasValue: true,
-        value: data,
-        hasError: false,
-        error: null,
-      });
-    },
-    error: (err) => {
-      state.set({
+export function createSuspense<T>(obs$: Observable<T>): Observable<Suspense<T>> {
+  return obs$.pipe(
+    map((data) => ({
+      isLoading: false,
+      hasValue: true,
+      value: data,
+      hasError: false,
+      error: null,
+    })),
+    startWith({
+      isLoading: true,
+      hasValue: false,
+      value: null,
+      hasError: false,
+      error: null,
+    }),
+    catchError((err) =>
+      of({
         isLoading: false,
         hasValue: false,
         value: null,
         hasError: true,
         error: err,
-      });
-    },
-  });
-
-  return state;
+      }),
+    ),
+  );
 }
 
 export const getSuspensifyInitialValues = <T>(value: T) => ({

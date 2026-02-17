@@ -1,0 +1,180 @@
+@if (launch()?.isLoading) {
+  <div class="flex justify-center items-center h-screen">
+    <div class="relative">
+      <div
+        class="w-20 h-20 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"
+      ></div>
+      <p class="text-cyan-400 text-sm mt-4 text-center tracking-wider">LOADING MISSION DATA</p>
+    </div>
+  </div>
+} @else if (launch()?.value; as launch) {
+  <div class="relative h-[70vh] overflow-hidden mb-12">
+    @if (launch.links.flickr.original && launch.links.flickr.original.length > 0) {
+      <spx-image
+        [src]="getRandomImage(launch.links.flickr.original)"
+        alt="Launch background"
+        [variant]="ImageVariant.COVER"
+      />
+    } @else {
+      <div class="absolute inset-0 w-full h-full bg-linear-to-b from-zinc-900 to-black"></div>
+    }
+
+    <div class="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent"></div>
+
+    <div
+      class="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+    ></div>
+    <div
+      class="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+    ></div>
+
+    <div class="relative h-full flex flex-col justify-end max-w-7xl mx-auto px-8 pb-16">
+      <div class="space-y-4">
+        <div class="flex items-center gap-4">
+          <spx-launch-stat [launch]="launch.success" />
+          <span class="text-cyan-400 text-sm font-semibold tracking-widest">
+            MISSION #{{ launch.flight_number }}
+          </span>
+        </div>
+
+        <h1 class="text-7xl font-bold text-white tracking-tight leading-none">
+          {{ launch.name }}
+        </h1>
+
+        <p class="text-2xl text-zinc-300 max-w-3xl">
+          {{ launch.details || 'Discover this incredible SpaceX mission to the stars.' }}
+        </p>
+
+        <div class="flex items-center gap-6 pt-4">
+          <div class="flex items-center gap-2 text-zinc-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+            <span class="font-semibold"
+              >{{ launch.date_utc | date: 'MMM d, yyyy • HH:mm' }} UTC</span
+            >
+          </div>
+
+          @if (launch.links.webcast) {
+            <a
+              [href]="launch.links.webcast"
+              target="_blank"
+              spxTechBorder
+              [corners]="CornerStyle.ALL"
+              borderSize="sm"
+              class="group relative inline-flex items-center gap-3 px-6 py-3 bg-cyan-500/20 hover:bg-cyan-500/30 border-2 border-cyan-400 text-cyan-400 font-bold tracking-wider transition-all duration-300 overflow-hidden"
+            >
+              <div
+                class="absolute inset-0 bg-linear-to-r from-cyan-400/0 via-cyan-400/20 to-cyan-400/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+              ></div>
+              <svg class="w-5 h-5 relative" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+              <span class="relative">WATCH LAUNCH</span>
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-8 pb-20">
+    <spx-title text="MISSION DETAILS" />
+
+    <div class="grid md:grid-cols-4 gap-6 mb-12">
+      @for (stat of missionStats(); track stat.label) {
+        <div
+          spxTechBorder
+          [corners]="CornerStyle.TOP_RIGHT"
+          [showDecorations]="true"
+          [hoverable]="true"
+          class="p-6 group"
+        >
+          <p class="text-cyan-400 text-xs font-bold tracking-widest mb-2">{{ stat.label }}</p>
+          <p class="text-white text-xl font-bold">{{ stat.value }}</p>
+        </div>
+      }
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      @if (launch.links.patch.large) {
+        <div
+          spxTechBorder
+          [corners]="CornerStyle.ALL"
+          borderSize="lg"
+          [showDecorations]="true"
+          class="p-8 flex items-center justify-center"
+        >
+          <spx-image
+            [src]="launch.links.patch.large"
+            alt="Mission patch"
+            class="w-64 h-64 object-contain"
+          />
+        </div>
+      }
+
+      <div
+        spxTechBorder
+        [corners]="CornerStyle.TOP_RIGHT"
+        borderSize="lg"
+        [showDecorations]="true"
+        class="md:col-span-2 p-8"
+      >
+        <h3 class="text-2xl font-bold text-white mb-6 tracking-wide">RESOURCES</h3>
+
+        <div class="grid grid-cols-2 gap-4">
+          @for (resource of resources(); track resource.key) {
+            <a
+              [href]="resource.url"
+              target="_blank"
+              spxTechBorder
+              [corners]="CornerStyle.TOP_RIGHT"
+              borderSize="sm"
+              class="group flex items-center gap-3 p-4 bg-black/40 hover:bg-cyan-500/10 border border-cyan-400/20 hover:border-cyan-400/50 transition"
+            >
+              <div
+                class="w-12 h-12 flex items-center justify-center bg-cyan-500/20 group-hover:bg-cyan-500/30 transition text-2xl"
+              >
+                {{ resource.icon }}
+              </div>
+              <div>
+                <p class="text-white font-semibold">{{ resource.title }}</p>
+                <p class="text-zinc-400 text-xs">{{ resource.subtitle }}</p>
+              </div>
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-8 pt-8 pb-4">
+      <button
+        (click)="goBack()"
+        spxTechBorder
+        [corners]="CornerStyle.ALL"
+        borderSize="sm"
+        [hoverable]="true"
+        class="group flex items-center gap-2 px-4 py-2 bg-zinc-900/50 hover:bg-cyan-500/10 text-cyan-400 font-semibold"
+      >
+        <svg
+          class="w-5 h-5 transition-transform group-hover:-translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        <span>BACK TO LAUNCHES</span>
+      </button>
+    </div>
+  </div>
+}

@@ -11,13 +11,11 @@ export const routes: Routes = [
         pathMatch: 'full',
         redirectTo: 'launches',
       },
-
       {
         path: 'launches',
-        loadComponent: () =>
-          import('@features/launches/launches-page/launches-page').then((m) => m.LaunchesPage),
+        loadChildren: () =>
+          import('@features/launches/launches.routes').then((m) => m.LAUNCHES_ROUTES),
       },
-
       {
         path: 'rockets',
         loadComponent: () =>
