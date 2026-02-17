@@ -1,0 +1,69 @@
+<div class="py-12 px-4 md:px-8">
+  <div class="flex items-center gap-6 mb-10">
+    <div class="flex-1 h-px bg-linear-to-r from-transparent via-cyan-400/50 to-cyan-400/20"></div>
+    <div class="flex items-center gap-3">
+      <span class="text-cyan-400/50 text-xs tracking-widest">—</span>
+      <h2 class="text-lg md:text-2xl font-black tracking-[0.3em] text-white uppercase">
+        Next Launch
+      </h2>
+      <span class="text-cyan-400/50 text-xs tracking-widest">—</span>
+    </div>
+    <div class="flex-1 h-px bg-linear-to-l from-transparent via-cyan-400/50 to-cyan-400/20"></div>
+  </div>
+
+  @if (launch().value; as launch) {
+    <p class="text-center text-zinc-400 text-sm tracking-widest uppercase mb-8">
+      {{ launch.name }}
+    </p>
+
+    @if (isLaunched()) {
+      <div class="flex justify-center">
+        <div
+          spxTechBorder
+          [corners]="CornerStyle.ALL"
+          borderSize="md"
+          class="px-12 py-6 border border-emerald-400/30 bg-emerald-400/5"
+        >
+          <p class="text-emerald-400 font-black text-2xl tracking-widest">🚀 LAUNCHED!</p>
+        </div>
+      </div>
+    } @else {
+      <div class="flex items-center justify-center gap-4 md:gap-8">
+        @for (unit of units(); track unit.label; let last = $last) {
+          <div
+            spxTechBorder
+            [corners]="CornerStyle.ALL"
+            borderSize="sm"
+            [showDecorations]="true"
+            class="flex flex-col items-center justify-center w-20 h-20 md:w-32 md:h-32 border border-cyan-400/30 bg-zinc-950/80"
+          >
+            <span
+              class="font-black text-3xl md:text-6xl text-white tabular-nums leading-none"
+              style="
+                text-shadow:
+                  0 0 20px rgba(34, 211, 238, 0.8),
+                  0 0 40px rgba(34, 211, 238, 0.4);
+              "
+            >
+              {{ unit.value | number: '2.0-0' }}
+            </span>
+            <span class="text-cyan-400 text-xs tracking-widest mt-1 md:mt-2">{{ unit.label }}</span>
+          </div>
+
+          @if (!last) {
+            <span
+              class="text-3xl md:text-5xl font-black text-cyan-400/50 -mt-4 md:-mt-6 animate-pulse"
+              style="text-shadow: 0 0 15px rgba(34, 211, 238, 0.5)"
+            >
+              :
+            </span>
+          }
+        }
+      </div>
+
+      <p class="text-center text-zinc-500 text-xs tracking-widest mt-8 uppercase">
+        Scheduled for {{ launch.date_utc | date: 'MMMM d, yyyy • HH:mm' }} UTC
+      </p>
+    }
+  }
+</div>

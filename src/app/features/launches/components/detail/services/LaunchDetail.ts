@@ -13,9 +13,6 @@ export class LaunchDetailService {
   private _launchId = signal<string | null>(null);
   public launchId = this._launchId.asReadonly();
 
-  private _rocketId = signal<string | null>(null);
-  public rocketId = this._rocketId.asReadonly();
-
   public launch = derivedAsync(
     () => {
       if (!this._launchId()) return;
@@ -52,9 +49,5 @@ export class LaunchDetailService {
 
   public setLaunchId(id: string) {
     this._launchId.set(id);
-  }
-
-  public setRocketId(id: string) {
-    this._rocketId.set(id);
   }
 }
