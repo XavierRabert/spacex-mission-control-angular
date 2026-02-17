@@ -63,17 +63,6 @@ export class LaunchesList {
       })
 
       .to(cardElements, {
-        filter: 'blur(1px) hue-rotate(90deg)',
-        duration: 0.1,
-        ease: 'none',
-      })
-      .to(cardElements, {
-        filter: 'blur(0px) hue-rotate(0deg)',
-        duration: 0.2,
-        ease: 'none',
-      })
-
-      .to(cardElements, {
         filter: 'drop-shadow(0 0 30px rgba(0, 255, 255, 0.4))',
         duration: 0.15,
         ease: 'power2.out',

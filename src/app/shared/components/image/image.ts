@@ -26,12 +26,13 @@ export class Image {
 
     classes.push('w-full');
     classes.push('h-full');
+    classes.push('object-center');
+    classes.push('md:object-top');
 
     if (this.variant() === ImageVariant.COVER) {
       classes.push('absolute');
       classes.push('inset-0');
       classes.push('object-cover');
-      classes.push('object-top');
     } else {
       classes.push('relative');
       classes.push('object-contain');

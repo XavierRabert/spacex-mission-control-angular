@@ -11,11 +11,13 @@
   </div>
 } @else if (launch()?.value; as launch) {
   <div class="relative h-[40vh] md:h-[70vh] overflow-hidden mb-8 md:mb-12">
-    <spx-image
-      [src]="getRandomImage([...rocket().flickr_images, ...launch.links.flickr.original])"
-      alt="Launch background"
-      [variant]="ImageVariant.COVER"
-    />
+    @if (rocket().value; as rocket) {
+      <spx-image
+        [src]="getRandomImage([...rocket.flickr_images, ...launch.links.flickr.original])"
+        alt="Launch background"
+        [variant]="ImageVariant.COVER"
+      />
+    }
     <div
       class="hidden lg:block absolute inset-0 bg-linear-to-r from-black via-transparent to-black"
     ></div>
