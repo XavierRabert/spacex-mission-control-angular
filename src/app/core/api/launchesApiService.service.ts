@@ -2,14 +2,31 @@ import { inject, Injectable } from '@angular/core';
 import { BaseApiService } from './baseApiService.service';
 import { Observable } from 'rxjs';
 import { createSuspense, Suspense } from '../utils/suspense';
+import { PaginatedResponse } from '../utils/paginated';
+import { Launch, LaunchesListFilteredRequestDTO } from '@models/launches/launchesList';
 
 const FEATURE_PATH = 'launches';
 @Injectable({ providedIn: 'root' })
 export class LaunchesApiService {
   private _api = inject(BaseApiService);
 
-  public getPastLaunches(): Observable<Suspense<any[]>> {
-    return createSuspense(this._api.get<any[]>(`${FEATURE_PATH}/past`));
+  public getPastLaunches(
+    payload: LaunchesListFilteredRequestDTO,
+  ): Observable<PaginatedResponse<Launch>> {
+    const payloadRequest = {
+      query: {
+        upcoming: false,
+      },
+      options: {
+        page: payload.pageIndex,
+        limit: payload.pageSize,
+        sort: {
+          date_utc: 'desc',
+        },
+      },
+    };
+
+    return this._api.post<PaginatedResponse<Launch>>(`launches/query`, payloadRequest);
   }
 
   public getUpcomingLaunches(): Observable<any[]> {
