@@ -29,8 +29,12 @@ export class LaunchesApiService {
     return this._api.post<PaginatedResponse<Launch>>(`launches/query`, payloadRequest);
   }
 
-  public getUpcomingLaunches(): Observable<any[]> {
-    return this._api.get<any[]>(`${FEATURE_PATH}/upcoming`);
+  public getLatestLaunch(): Observable<Suspense<any>> {
+    return createSuspense(this._api.get<any>(`${FEATURE_PATH}/latest`));
+  }
+
+  public getNextLaunch(): Observable<Suspense<any>> {
+    return createSuspense(this._api.get<any>(`${FEATURE_PATH}/next`));
   }
 
   public getLaunchById(id: string): Observable<Suspense<any>> {

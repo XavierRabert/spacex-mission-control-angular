@@ -9,6 +9,7 @@ import { Image } from 'src/app/shared/components/image/image';
 import { ImageVariant } from 'src/app/shared/components/image/models/variants';
 import { Title } from 'src/app/shared/components/title/title';
 import { LaunchDetailService } from './services/LaunchDetail';
+import { getRandomImage } from 'src/app/core/utils/image';
 
 @Component({
   selector: 'spx-launch-detail',
@@ -26,6 +27,7 @@ export class LaunchDetail {
   public launchpadName = this._launchDetailService.launchpadName;
   public rocketName = this._launchDetailService.rocketName;
   public rocket = this._launchDetailService.rocket;
+  public getRandomImage = getRandomImage;
 
   public missionStats = computed(() => {
     const launchData = this.launch()?.value;
@@ -48,10 +50,5 @@ export class LaunchDetail {
 
   public goBack() {
     this._router.navigate(['/']);
-  }
-
-  public getRandomImage(images: string[]): string {
-    if (!images || images.length === 0) return '';
-    return images[Math.floor(Math.random() * images.length)];
   }
 }

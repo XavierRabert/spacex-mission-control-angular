@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { BaseApiService } from './baseApiService';
 import { Observable } from 'rxjs';
+import { createSuspense } from '../utils/suspense';
 
 @Injectable({ providedIn: 'root' })
 export class RocketsApiService {
@@ -11,6 +12,6 @@ export class RocketsApiService {
   }
 
   public getRocketById(id: string): Observable<any> {
-    return this._api.get<any>(`rockets/${id}`);
+    return createSuspense(this._api.get<any>(`rockets/${id}`));
   }
 }

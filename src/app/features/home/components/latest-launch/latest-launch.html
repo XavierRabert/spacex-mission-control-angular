@@ -1,0 +1,84 @@
+@if (latestLaunch().isLoading) {
+  <div class="flex justify-center items-center h-[40vh] md:h-screen">
+    <div class="relative">
+      <div
+        class="w-16 h-16 md:w-20 md:h-20 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"
+      ></div>
+      <p class="text-cyan-400 text-xs md:text-sm mt-4 text-center tracking-wider">
+        LOADING MISSION DATA
+      </p>
+    </div>
+  </div>
+} @else if (latestLaunch().value; as latestLaunch) {
+  <div #hero class="relative h-screen overflow-hidden">
+    <div #heroImage class="absolute inset-0 scale-125 origin-top">
+      @if (rocket().value; as rocket) {
+        <spx-image
+          [src]="getRandomImage([...rocket.flickr_images, ...latestLaunch.links?.flickr?.original])"
+          alt="Launch background"
+          [variant]="ImageVariant.COVER"
+        />
+      }
+      <div
+        class="hidden lg:block absolute inset-0 bg-linear-to-r from-black via-transparent to-black"
+      ></div>
+      <div class="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent"></div>
+      <div class="absolute inset-0 bg-linear-to-b from-black/50 to-transparent"></div>
+      <div
+        class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+      ></div>
+      <div
+        class="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+      ></div>
+    </div>
+
+    <div
+      class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+    ></div>
+
+    <div
+      #heroContent
+      class="relative h-full flex flex-col justify-center max-w-7xl mx-auto px-4 md:px-8"
+    >
+      <div class="max-w-3xl space-y-4 md:space-y-6">
+        <div data-animate class="flex items-center gap-3">
+          <div class="w-8 h-px bg-cyan-400"></div>
+          <span class="text-cyan-400 text-xs font-bold tracking-[0.3em] uppercase"
+            >Latest Mission</span
+          >
+        </div>
+
+        <h1
+          data-animate
+          class="text-5xl md:text-8xl font-black text-white tracking-tight leading-none uppercase"
+        >
+          EXPLORE THE<br />
+          <span class="text-cyan-400">FINAL FRONTIER</span>
+        </h1>
+
+        <p data-animate class="text-lg md:text-xl text-zinc-300 max-w-xl">
+          {{ latestLaunch.name }} —
+          {{
+            latestLaunch.details || 'Discover SpaceX launches and missions to the stars.'
+              | slice: 0 : 100
+          }}...
+        </p>
+
+        <div data-animate class="flex flex-wrap items-center gap-4 pt-4">
+          @if (latestLaunch.links?.webcast) {
+            <a
+              [href]="latestLaunch.links.webcast"
+              target="_blank"
+              spxTechBorder
+              [corners]="CornerStyle.ALL"
+              borderSize="sm"
+              class="group relative inline-flex items-center gap-3 px-8 py-4 bg-cyan-500/20 hover:bg-cyan-500/30 border-2 border-cyan-400 text-cyan-400 font-bold tracking-widest uppercase text-sm transition-all duration-300 overflow-hidden"
+            >
+              Watch Video
+            </a>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+}
