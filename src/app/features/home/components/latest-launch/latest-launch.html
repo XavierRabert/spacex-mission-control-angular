@@ -1,6 +1,6 @@
 @if (latestLaunch().isLoading) {
   <div class="flex justify-center items-center h-[40vh] md:h-screen">
-    <div class="relative">
+    <div class="flex flex-col items-center">
       <div
         class="w-16 h-16 md:w-20 md:h-20 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"
       ></div>
@@ -10,27 +10,27 @@
     </div>
   </div>
 } @else if (latestLaunch().value; as latestLaunch) {
-  <div #hero class="relative h-screen overflow-hidden">
-    <div #heroImage class="absolute inset-0 scale-125 origin-top">
-      @if (rocket().value; as rocket) {
+  <div class="relative h-screen overflow-hidden">
+    @if (rocket().value; as rocket) {
+      <div class="absolute inset-0 scale-125 origin-top">
         <spx-image
           [src]="getRandomImage([...rocket.flickr_images, ...latestLaunch.links?.flickr?.original])"
           alt="Launch background"
           [variant]="ImageVariant.COVER"
         />
-      }
-      <div
-        class="hidden lg:block absolute inset-0 bg-linear-to-r from-black via-transparent to-black"
-      ></div>
-      <div class="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent"></div>
-      <div class="absolute inset-0 bg-linear-to-b from-black/50 to-transparent"></div>
-      <div
-        class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
-      ></div>
-      <div
-        class="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
-      ></div>
-    </div>
+        <div
+          class="hidden lg:block absolute inset-0 bg-linear-to-r from-black via-transparent to-black"
+        ></div>
+        <div class="absolute inset-0 bg-linear-to-t from-black via-black/50 to-transparent"></div>
+        <div class="absolute inset-0 bg-linear-to-b from-black/50 to-transparent"></div>
+        <div
+          class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+        ></div>
+        <div
+          class="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+        ></div>
+      </div>
+    }
 
     <div
       class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
