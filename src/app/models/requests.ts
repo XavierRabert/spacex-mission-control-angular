@@ -1,5 +1,5 @@
-export type PaginatedRequestDTO<T> = {
-  filter: T;
+export type PaginatedRequestDTO<T = unknown> = {
+  filter?: T;
   pageIndex: number;
   pageSize: number;
 };

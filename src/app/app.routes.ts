@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { Shell } from './core/layout/shell/shell';
 
 export const routes: Routes = [
   {
@@ -17,10 +16,9 @@ export const routes: Routes = [
       },
       {
         path: 'rockets',
-        loadComponent: () =>
-          import('@features/rockets/rockets-page/rockets-page').then((m) => m.RocketsPage),
+        loadChildren: () =>
+          import('@features/rockets/rockets.routes').then((m) => m.ROCKETS_ROUTES),
       },
-
       {
         path: 'favorites',
         loadComponent: () =>

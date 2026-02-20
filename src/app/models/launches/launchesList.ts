@@ -1,5 +1,4 @@
 import { PaginatedRequestDTO } from '@models/requests';
-import { Launch } from './launch';
 import { Rocket } from '@models/rocket/rocket';
 
 export type BaseListLaunchesFilter = {
