@@ -18,22 +18,10 @@ export class RocketsApiService {
       options: {
         page: payload.pageIndex,
         limit: payload.pageSize,
-        sort: {
-          date_utc: 'desc',
-        },
       },
     };
 
     return this._api.post<PaginatedResponse<Rocket>>(`rockets/query`, payloadRequest);
-  }
-
-  public getPostRockets(payload: RocketListFilteredRequestDTO): Observable<Rocket[]> {
-    const payloadRequest = {
-      page: payload.pageIndex,
-      limit: payload.pageSize,
-    };
-
-    return this._api.get<Rocket[]>('rockets', { params: payloadRequest });
   }
 
   public getRocketById(id: string): Observable<Suspense<Rocket>> {
