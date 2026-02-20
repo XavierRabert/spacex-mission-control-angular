@@ -7,8 +7,9 @@ export class BaseApiService {
   private http = inject(HttpClient);
   private baseUrl = 'https://api.spacexdata.com/v4';
 
-  public get<T>(endpoint: string, params?: HttpParams): Observable<T> {
-    return this.http.get<T>(`${this.baseUrl}/${endpoint}`, { params });
+  public get<T>(...args: Parameters<typeof this.http.get>): Observable<T> {
+    const [url, options, ...rest] = args;
+    return this.http.get<T>(`${this.baseUrl}/${url}`, { ...options }, ...rest);
   }
 
   public post<T>(endpoint: string, body: any): Observable<T> {
