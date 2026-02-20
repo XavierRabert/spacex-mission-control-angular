@@ -1,1 +1,194 @@
-<h1 class="text-4xl font-bold text-purple-400">🛰 Rocket Detail (coming soon)</h1>
+@if (rocket()?.pending) {
+  <div class="flex justify-center items-center h-[40vh] md:h-screen">
+    <div class="relative">
+      <div
+        class="w-16 h-16 md:w-20 md:h-20 border-4 border-cyan-400/20 border-t-cyan-400 rounded-full animate-spin"
+      ></div>
+      <p class="text-cyan-400 text-xs md:text-sm mt-4 text-center tracking-wider">
+        LOADING ROCKET DATA
+      </p>
+    </div>
+  </div>
+} @else if (rocket()?.value; as rocket) {
+  <!-- HERO -->
+  <div class="relative h-[40vh] md:h-[70vh] overflow-hidden mb-8 md:mb-12">
+    <spx-image
+      [src]="getRandomImage(rocket.flickr_images)"
+      alt="Rocket background"
+      [variant]="ImageVariant.COVER"
+    />
+
+    <div class="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent"></div>
+    <div class="absolute inset-0 bg-linear-to-b from-black/50 to-transparent"></div>
+
+    <div
+      class="absolute top-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+    ></div>
+    <div
+      class="absolute bottom-0 left-0 w-full h-px bg-linear-to-r from-transparent via-cyan-400/60 to-transparent"
+    ></div>
+
+    <div
+      class="relative h-full flex flex-col justify-end max-w-7xl mx-auto px-4 md:px-8 pb-8 md:pb-16"
+    >
+      <div class="space-y-4">
+        <div class="flex items-center gap-4">
+          <span
+            class="px-3 py-1 text-xs font-bold tracking-widest"
+            [class.text-emerald-400]="rocket.active"
+            [class.text-red-400]="!rocket.active"
+          >
+            {{ rocket.active ? 'ACTIVE' : 'RETIRED' }}
+          </span>
+
+          <span class="text-cyan-400 text-sm font-semibold tracking-widest">
+            {{ rocket.country }}
+          </span>
+        </div>
+
+        <h1 class="text-4xl md:text-7xl font-bold text-white tracking-tight leading-none">
+          {{ rocket.name }}
+        </h1>
+
+        <p class="hidden md:block text-2xl text-zinc-300 max-w-3xl">
+          {{ rocket.description }}
+        </p>
+
+        <div class="flex flex-wrap items-center gap-6 pt-4 text-zinc-400">
+          <span class="font-semibold">
+            First flight: {{ rocket.first_flight | date: 'MMM d, yyyy' }}
+          </span>
+
+          <span>
+            Success rate:
+            <span class="text-cyan-400 font-bold"> {{ rocket.success_rate_pct }}% </span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE DESCRIPTION -->
+  <div class="md:hidden px-4 mb-6">
+    <p class="text-sm text-zinc-400 leading-relaxed">
+      {{ rocket.description }}
+    </p>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="max-w-7xl mx-auto px-4 md:px-8 pb-20 space-y-10">
+    <spx-title text="ROCKET SPECIFICATIONS" />
+
+    <!-- MAIN STATS -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      @for (spec of rocketSpecs(); track spec.label) {
+        <div spxTechBorder [corners]="CornerStyle.TOP_RIGHT" class="p-6">
+          <p class="text-cyan-400 text-xs font-bold tracking-widest mb-2">
+            {{ spec.label }}
+          </p>
+          <p class="text-white text-xl font-bold">
+            {{ spec.value }}
+          </p>
+        </div>
+      }
+    </div>
+
+    <!-- STAGES -->
+    <spx-title text="STAGES" />
+
+    <div class="grid md:grid-cols-2 gap-6">
+      @for (stage of rocketStages(); track stage.title) {
+        <div spxTechBorder [corners]="CornerStyle.ALL" class="p-6">
+          <h3 class="text-white text-xl font-bold mb-4">
+            {{ stage.title }}
+          </h3>
+
+          <div class="space-y-2 text-sm text-zinc-400">
+            <p>
+              Engines:
+              <span class="text-white">
+                {{ stage.data.engines }}
+              </span>
+            </p>
+
+            <p>
+              Reusable:
+              <span class="text-white">
+                {{ stage.data.reusable ? 'Yes' : 'No' }}
+              </span>
+            </p>
+
+            <p>
+              Burn time:
+              <span class="text-white"> {{ stage.data.burn_time_sec }} s </span>
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- PAYLOADS -->
+    <spx-title text="PAYLOAD CAPACITY" />
+
+    <div class="grid md:grid-cols-3 gap-6">
+      @for (payload of rocket.payload_weights; track payload.id) {
+        <div spxTechBorder [corners]="CornerStyle.TOP_RIGHT" class="p-6">
+          <p class="text-cyan-400 text-xs font-bold tracking-widest mb-2">
+            {{ payload.name | uppercase }}
+          </p>
+          <p class="text-white text-xl font-bold">{{ payload.kg | number }} kg</p>
+        </div>
+      }
+    </div>
+
+    <!-- RESOURCES -->
+    <spx-title text="RESOURCES" />
+
+    <div class="grid sm:grid-cols-2 gap-4">
+      <a
+        [href]="rocket.wikipedia"
+        target="_blank"
+        spxTechBorder
+        [corners]="CornerStyle.TOP_RIGHT"
+        borderSize="sm"
+        class="group flex items-center gap-3 p-4 bg-black/40 hover:bg-cyan-500/10 border border-cyan-400/20 hover:border-cyan-400/50 transition"
+      >
+        <div
+          class="w-12 h-12 flex items-center justify-center bg-cyan-500/20 group-hover:bg-cyan-500/30 transition text-2xl"
+        >
+          🌍
+        </div>
+        <div>
+          <p class="text-white font-semibold">Wikipedia</p>
+          <p class="text-zinc-400 text-xs">Learn more about this rocket</p>
+        </div>
+      </a>
+    </div>
+
+    <!-- BACK -->
+    <div class="pt-6">
+      <button
+        (click)="goBack()"
+        spxTechBorder
+        [corners]="CornerStyle.ALL"
+        borderSize="sm"
+        class="group flex items-center gap-2 px-4 py-2 bg-zinc-900/50 hover:bg-cyan-500/10 text-cyan-400 font-semibold text-sm transition-all"
+      >
+        <svg
+          class="w-4 h-4 transition-transform group-hover:-translate-x-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        <span>BACK TO ROCKETS</span>
+      </button>
+    </div>
+  </div>
+}
