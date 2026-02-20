@@ -1,35 +1,35 @@
 import { catchError, map, Observable, of, startWith } from 'rxjs';
 
 export interface Suspense<T> {
-  isLoading: boolean;
+  pending: boolean;
   hasValue: boolean;
-  value: T | null;
   hasError: boolean;
+  value: T | undefined;
   error: any;
 }
 
 export function createSuspense<T>(obs$: Observable<T>): Observable<Suspense<T>> {
   return obs$.pipe(
     map((data) => ({
-      isLoading: false,
+      pending: false,
       hasValue: true,
-      value: data,
       hasError: false,
+      value: data,
       error: null,
     })),
     startWith({
-      isLoading: true,
+      pending: true,
       hasValue: false,
-      value: null,
       hasError: false,
+      value: undefined,
       error: null,
     }),
     catchError((err) =>
       of({
-        isLoading: false,
+        pending: false,
         hasValue: false,
-        value: null,
         hasError: true,
+        value: undefined,
         error: err,
       }),
     ),
@@ -37,9 +37,9 @@ export function createSuspense<T>(obs$: Observable<T>): Observable<Suspense<T>> 
 }
 
 export const getSuspensifyInitialValues = <T>(value: T) => ({
-  isLoading: true,
+  pending: true,
   hasValue: true,
-  value,
   hasError: false,
+  value,
   error: undefined,
 });

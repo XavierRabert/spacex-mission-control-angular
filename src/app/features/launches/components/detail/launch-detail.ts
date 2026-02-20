@@ -51,6 +51,6 @@ export class LaunchDetail {
   }
 
   public goBack() {
-    this._router.navigate(['/']);
+    this._router.navigate(['/launches']);
   }
 }

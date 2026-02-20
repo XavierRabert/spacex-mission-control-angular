@@ -1,4 +1,4 @@
-@if (launch()?.isLoading) {
+@if (launch()?.pending) {
   <div class="flex justify-center items-center h-[40vh] md:h-screen">
     <div class="relative">
       <div
@@ -11,7 +11,7 @@
   </div>
 } @else if (launch()?.value; as launch) {
   <div class="relative h-[40vh] md:h-[70vh] overflow-hidden mb-8 md:mb-12">
-    @if (rocket().value; as rocket) {
+    @if (rocket()?.value; as rocket) {
       <spx-image
         [src]="getRandomImage([...rocket.flickr_images, ...launch.links.flickr.original])"
         alt="Launch background"

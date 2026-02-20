@@ -23,6 +23,6 @@ import { TechBorderDirective } from '@directives/tech-border.directive';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LaunchStat {
-  public launch = input<boolean>(true);
+  public launch = input<boolean | null>(null);
   public CornerStyle = CornerStyle;
 }

@@ -58,7 +58,7 @@ export class NextLaunch implements OnDestroy {
 
   private _tick() {
     const now = new Date().getTime();
-    const target = new Date(this.launch().value.date_utc).getTime();
+    const target = new Date(this.launch().value!.date_utc).getTime();
     const diff = target - now;
 
     if (diff <= 0) {
