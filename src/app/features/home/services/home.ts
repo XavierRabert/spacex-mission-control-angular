@@ -14,11 +14,16 @@ export class HomeService {
     initialValue: getSuspensifyInitialValues(undefined),
   });
 
-  public rocket = derivedAsync(() => {
-    const id = this.latestLaunch()?.value?.rocket;
-    if (id === undefined || id === null) return of(null);
-    return this._rocketsService.getRocketById(id);
-  });
+  public rocket = derivedAsync(
+    () => {
+      const id = this.latestLaunch()?.value?.rocket;
+      if (id === undefined || id === null) return of(null);
+      return this._rocketsService.getRocketById(id);
+    },
+    {
+      initialValue: getSuspensifyInitialValues(undefined),
+    },
+  );
 
   public nextLaunch = derivedAsync(() => this._launchesService.getNextLaunch(), {
     initialValue: getSuspensifyInitialValues(undefined),

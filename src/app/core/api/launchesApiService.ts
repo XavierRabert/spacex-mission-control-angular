@@ -3,7 +3,9 @@ import { BaseApiService } from './baseApiService';
 import { Observable } from 'rxjs';
 import { createSuspense, Suspense } from '../utils/suspense';
 import { PaginatedResponse } from '../utils/paginated';
-import { Launch, LaunchesListFilteredRequestDTO } from '@models/launches/launchesList';
+import { LaunchesListFilteredRequestDTO } from '@models/launches/launchesList';
+import { Launchpad } from '@models/launches/launchpad';
+import { Launch } from '@models/launches/launch';
 
 const FEATURE_PATH = 'launches';
 @Injectable({ providedIn: 'root' })
@@ -29,19 +31,19 @@ export class LaunchesApiService {
     return this._api.post<PaginatedResponse<Launch>>(`launches/query`, payloadRequest);
   }
 
-  public getLatestLaunch(): Observable<Suspense<any>> {
-    return createSuspense(this._api.get<any>(`${FEATURE_PATH}/latest`));
+  public getLatestLaunch(): Observable<Suspense<Launch>> {
+    return createSuspense(this._api.get<Launch>(`${FEATURE_PATH}/latest`));
   }
 
-  public getNextLaunch(): Observable<Suspense<any>> {
-    return createSuspense(this._api.get<any>(`${FEATURE_PATH}/next`));
+  public getNextLaunch(): Observable<Suspense<Launch>> {
+    return createSuspense(this._api.get<Launch>(`${FEATURE_PATH}/next`));
   }
 
-  public getLaunchById(id: string): Observable<Suspense<any>> {
-    return createSuspense(this._api.get<any>(`${FEATURE_PATH}/${id}`));
+  public getLaunchById(id: string): Observable<Suspense<Launch>> {
+    return createSuspense(this._api.get<Launch>(`${FEATURE_PATH}/${id}`));
   }
 
   public getLaunchpadById(id: string) {
-    return this._api.get<any>(`launchpads/${id}`);
+    return this._api.get<Launchpad>(`launchpads/${id}`);
   }
 }

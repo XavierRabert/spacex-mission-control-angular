@@ -23,14 +23,13 @@ export class LaunchDetailService {
     },
   );
 
-  public launchpadName = derivedAsync(() => {
+  public launchpad = derivedAsync(() => {
     const id = this.launch()?.value?.launchpad;
     if (!id) return of(null);
-    return this._launchesService.getLaunchpadById(id).pipe(
-      map((l) => l.full_name),
-      catchError(() => of('Unknown')),
-    );
+    return this._launchesService.getLaunchpadById(id);
   });
+
+  public launchpadName = computed(() => this.launchpad()?.full_name || '');
 
   public rocket = derivedAsync(() => {
     const id = this.launch()?.value?.rocket;
@@ -38,7 +37,7 @@ export class LaunchDetailService {
     return this._rocketsService.getRocketById(id);
   });
 
-  public rocketName = computed(() => this.rocket()?.value?.name);
+  public rocketName = computed(() => this.rocket()?.value?.name || '');
 
   public setLaunchId(id: string) {
     this._launchId.set(id);

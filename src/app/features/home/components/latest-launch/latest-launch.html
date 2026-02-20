@@ -1,4 +1,4 @@
-@if (latestLaunch().isLoading) {
+@if (latestLaunch().pending) {
   <div class="flex justify-center items-center h-[40vh] md:h-screen">
     <div class="flex flex-col items-center">
       <div
@@ -11,10 +11,10 @@
   </div>
 } @else if (latestLaunch().value; as latestLaunch) {
   <div class="relative h-screen overflow-hidden">
-    @if (rocket().value; as rocket) {
+    @if (rocket()?.value; as rocket) {
       <div class="absolute inset-0 scale-125 origin-top">
         <spx-image
-          [src]="getRandomImage([...rocket.flickr_images, ...latestLaunch.links?.flickr?.original])"
+          [src]="getRandomImage([...rocket.flickr_images, ...latestLaunch!.links.flickr.original])"
           alt="Launch background"
           [variant]="ImageVariant.COVER"
         />
@@ -65,7 +65,7 @@
         </p>
 
         <div data-animate class="flex flex-wrap items-center gap-4 pt-4">
-          @if (latestLaunch.links?.webcast) {
+          @if (latestLaunch!.links.webcast) {
             <a
               [href]="latestLaunch.links.webcast"
               target="_blank"
