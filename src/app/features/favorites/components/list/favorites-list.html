@@ -1,0 +1,46 @@
+<div class="space-y-10">
+  <spx-title text="FAVORITES" />
+
+  @if (hasNoFavorites()) {
+    <div
+      class="flex flex-col items-center justify-center gap-4 py-24 text-center"
+      spxTechBorder
+      [corners]="CornerStyle.ALL"
+      [showDecorations]="true"
+    >
+      <span class="text-4xl text-cyan-400/20">✦</span>
+      <p class="text-zinc-500 text-sm tracking-widest uppercase">No favorites yet</p>
+      <p class="text-zinc-600 text-xs">Mark rockets or launches with ✦ to save them here</p>
+    </div>
+  }
+
+  @if (favoriteRockets().length) {
+    <section class="space-y-4">
+      <h2
+        class="text-xs tracking-widest text-cyan-400/60 uppercase border-b border-cyan-400/10 pb-2"
+      >
+        Rockets
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+        @for (rocket of favoriteRockets(); track rocket.id) {
+          <spx-rocket-card [rocket]="rocket" (click)="onClickRocket(rocket.id)" />
+        }
+      </div>
+    </section>
+  }
+
+  @if (favoriteLaunches().length) {
+    <section class="space-y-4">
+      <h2
+        class="text-xs tracking-widest text-cyan-400/60 uppercase border-b border-cyan-400/10 pb-2"
+      >
+        Launches
+      </h2>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-3 md:gap-4">
+        @for (launch of favoriteLaunches(); track launch.id) {
+          <spx-launch-card [launch]="launch" (click)="onClickLaunch(launch.id)" />
+        }
+      </div>
+    </section>
+  }
+</div>

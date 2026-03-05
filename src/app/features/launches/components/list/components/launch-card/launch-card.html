@@ -21,13 +21,16 @@
       <span class="text-zinc-500 text-xs hidden sm:block">
         {{ launch().date_utc | date: 'MMM d, yyyy' }}
       </span>
-      <span
-        class="flex items-center gap-1 font-semibold text-xs"
-        [class.text-emerald-400]="launch().success"
-        [class.text-red-400]="!launch().success"
-      >
-        {{ launch().success ? '✔' : '✖' }}
-      </span>
+      <div class="flex items-center gap-3">
+        <span
+          class="flex items-center gap-1 font-semibold text-xs"
+          [class.text-emerald-400]="launch().success"
+          [class.text-red-400]="!launch().success"
+        >
+          {{ launch().success ? '✔' : '✖' }}
+        </span>
+        <spx-favorite [id]="launch().id" [favoriteType]="FavoriteType.LAUNCH"></spx-favorite>
+      </div>
     </div>
   </div>
 
