@@ -21,8 +21,10 @@
       <span>
         {{ rocket().first_flight | date: 'MMM d, yyyy' }}
       </span>
-
-      <span class="text-cyan-400 font-semibold"> {{ rocket().success_rate_pct }}% </span>
+      <div class="flex items-center gap-3">
+        <span class="text-cyan-400 font-semibold"> {{ rocket().success_rate_pct }}% </span>
+        <spx-favorite [id]="rocket().id" [favoriteType]="FavoriteType.ROCKET"></spx-favorite>
+      </div>
     </div>
   </div>
 

@@ -1,5 +1,5 @@
 import { DatePipe, DecimalPipe, UpperCasePipe } from '@angular/common';
-import { Component, computed, effect, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, effect, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { TechBorderDirective } from '@directives/tech-border.directive';
 import { Title } from '@shared/components/title/title';
@@ -15,6 +15,7 @@ import { getRocketSpecs, getRocketStages } from './models/rockets-detail';
   standalone: true,
   imports: [TechBorderDirective, Image, Title, DatePipe, DecimalPipe, UpperCasePipe],
   templateUrl: './rocket-detail.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RocketDetail {
   private _rokcketDetailService = inject(RocketDetailService);

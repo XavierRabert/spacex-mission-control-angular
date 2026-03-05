@@ -21,8 +21,8 @@ export const routes: Routes = [
       },
       {
         path: 'favorites',
-        loadComponent: () =>
-          import('@features/favorites/favorites-page/favorites-page').then((m) => m.FavoritesPage),
+        loadChildren: () =>
+          import('@features/favorites/favorites.routes').then((m) => m.FAVORITES_ROUTES),
       },
     ],
   },

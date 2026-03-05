@@ -33,9 +33,7 @@ export class RocketsService {
                 totalPages: response.totalPages || 0,
               });
             }),
-            map((response) => {
-              return response.docs;
-            }),
+            map((response) => response.docs),
           ),
       ),
     {
