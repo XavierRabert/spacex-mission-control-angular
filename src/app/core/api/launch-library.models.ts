@@ -35,7 +35,7 @@ export interface Ll2LauncherConfiguration {
   name: string;
   active?: boolean;
   maiden_flight?: string | null;
-  manufacturer?: { name?: string } | null;
+  manufacturer?: { name?: string; country?: Array<{ name?: string }> } | null;
   image?: { image_url?: string | null; thumbnail_url?: string | null } | null;
   total_launch_count?: number;
   successful_launches?: number;
@@ -121,7 +121,7 @@ export function mapLl2Rocket(source: Ll2LauncherConfiguration): Rocket {
     name: source.name,
     active: source.active ?? true,
     first_flight: source.maiden_flight || null,
-    country: '',
+    country: source.manufacturer?.country?.[0]?.name || '',
     company: source.manufacturer?.name || 'Unknown manufacturer',
     wikipedia: source.wiki_url || null,
     description: source.description || source.families?.map((family) => family.name).filter(Boolean).join(' / ') || '',
