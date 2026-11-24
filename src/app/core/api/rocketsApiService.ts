@@ -12,9 +12,7 @@ export class RocketsApiService {
 
   public getRockets(payload: RocketListFilteredRequestDTO): Observable<PaginatedResponse<Rocket>> {
     const payloadRequest = {
-      query: {
-        upcoming: false,
-      },
+      query: {},
       options: {
         page: payload.pageIndex,
         limit: payload.pageSize,
