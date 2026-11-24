@@ -34,7 +34,11 @@
     >
       <div class="space-y-2 md:space-y-4">
         <div class="flex items-center gap-3 md:gap-4">
-          <spx-launch-stat [launch]="launch.success" />
+          @if (launch.success === null) {
+            <span class="px-3 py-1 text-xs font-bold tracking-widest text-cyan-300 bg-cyan-500/10 border border-cyan-400/30">{{ launch.status }}</span>
+          } @else {
+            <spx-launch-stat [launch]="launch.success" />
+          }
           <span class="text-cyan-400 text-xs md:text-sm font-semibold tracking-widest">
             MISSION #{{ launch.flight_number }}
           </span>
