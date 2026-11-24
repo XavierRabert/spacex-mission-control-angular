@@ -13,7 +13,7 @@
   <div class="relative h-[40vh] md:h-[70vh] overflow-hidden mb-8 md:mb-12">
     @if (rocket()?.value; as rocket) {
       <spx-image
-        [src]="getRandomImage([...rocket.flickr_images, ...launch.links.flickr.original])"
+        [src]="rocket.image || launch.image || ''"
         alt="Launch background"
         [variant]="ImageVariant.COVER"
       />
