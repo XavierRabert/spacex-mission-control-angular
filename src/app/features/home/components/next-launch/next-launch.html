@@ -67,5 +67,7 @@
         Scheduled for {{ launch.date_utc | date: 'MMMM d, yyyy • HH:mm' }} UTC
       </p>
     }
+  } @else if (launch().error; as error) {
+    <p class="text-center text-red-300 text-sm">Unable to load the next SpaceX launch: {{ error.message }}</p>
   }
 </div>
