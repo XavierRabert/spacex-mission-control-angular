@@ -32,7 +32,6 @@ export class LatestLaunch implements OnDestroy {
   public heroContentRef = viewChild<ElementRef<HTMLElement>>('heroContent');
 
   public latestLaunch = this._homeService.latestLaunch;
-  public rocket = this._homeService.rocket;
   public CornerStyle = CornerStyle;
 
   private _heroTimeline?: gsap.core.Timeline;
