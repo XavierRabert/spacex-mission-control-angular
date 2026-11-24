@@ -36,4 +36,8 @@
       </div>
     </div>
   </div>
+} @else if (latestLaunch().error; as error) {
+  <div class="flex justify-center items-center min-h-[40vh] px-4 text-center text-red-300">
+    Unable to load the latest SpaceX mission: {{ error.message }}
+  </div>
 }
