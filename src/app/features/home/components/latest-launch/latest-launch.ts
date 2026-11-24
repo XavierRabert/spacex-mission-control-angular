@@ -12,7 +12,6 @@ import { CornerStyle } from '@directives/models/types';
 import { SlicePipe } from '@angular/common';
 import { TechBorderDirective } from '@directives/tech-border.directive';
 import { Image } from '@shared/components/image/image';
-import { getRandomImage } from 'src/app/core/utils/image';
 import { ImageVariant } from '@shared/components/image/models/variants';
 import { HomeService } from '@features/home/services/home';
 import { explicitEffect } from 'ngxtension/explicit-effect';
@@ -46,7 +45,6 @@ export class LatestLaunch implements OnDestroy {
   }
 
   public ImageVariant = ImageVariant;
-  public getRandomImage = getRandomImage;
 
   public ngOnDestroy() {
     ScrollTrigger.getAll().forEach((t) => t.kill());
