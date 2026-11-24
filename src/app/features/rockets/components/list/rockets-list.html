@@ -1,19 +1,23 @@
 <div class="space-y-8">
   <spx-title text="ROCKETS" />
 
-  @if (rockets().error; as e) {
+  @if (rockets().pending) {
+    <div class="flex min-h-[35vh] flex-col items-center justify-center gap-4 text-cyan-400" role="status" aria-live="polite">
+      <div class="h-12 w-12 animate-spin rounded-full border-4 border-cyan-400/20 border-t-cyan-400"></div>
+      <p class="text-xs tracking-[0.25em]">LOADING ROCKET DATABASE</p>
+    </div>
+  } @else if (rockets().error; as e) {
     <div
       class="flex items-center gap-3 p-4 border border-red-400/30 bg-red-400/5 text-red-400 text-sm"
       spxTechBorder
       [corners]="CornerStyle.ALL"
       [showDecorations]="true"
       [borderDecorationsColor]="'border-red-600'"
+      role="alert"
     >
-      ✖ Error: {{ e.message }}
+      ✖ {{ e.message }}
     </div>
-  }
-
-  @if (rockets().value; as data) {
+  } @else if (rockets().value; as data) {
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
       @for (rocket of data; track rocket.id) {
         <spx-rocket-card [rocket]="rocket" (click)="onClickDetail(rocket.id)" />
