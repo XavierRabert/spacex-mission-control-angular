@@ -199,4 +199,8 @@
       </button>
     </div>
   </div>
+} @else if (launch()?.error; as error) {
+  <div class="flex justify-center items-center min-h-[40vh] px-4 text-center text-red-300">
+    Unable to load mission details: {{ error.message }}
+  </div>
 }
