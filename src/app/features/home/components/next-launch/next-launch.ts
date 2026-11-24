@@ -45,8 +45,12 @@ export class NextLaunch implements OnDestroy {
 
   constructor() {
     effect(() => {
-      if (this.launch().value) {
-        this._tick();
+      const launch = this.launch().value;
+      if (!launch) return;
+
+      if (this._interval) clearInterval(this._interval);
+      this._tick();
+      if (!this.isLaunched()) {
         this._interval = setInterval(() => this._tick(), 1000);
       }
     });
@@ -57,9 +61,15 @@ export class NextLaunch implements OnDestroy {
   }
 
   private _tick() {
-    const now = new Date().getTime();
-    const target = new Date(this.launch().value!.date_utc).getTime();
-    const diff = target - now;
+    const dateUtc = this.launch().value?.date_utc;
+    const target = dateUtc ? new Date(dateUtc).getTime() : Number.NaN;
+
+    if (!Number.isFinite(target)) {
+      if (this._interval) clearInterval(this._interval);
+      return;
+    }
+
+    const diff = target - Date.now();
 
     if (diff <= 0) {
       this.isLaunched.set(true);
@@ -68,6 +78,7 @@ export class NextLaunch implements OnDestroy {
       return;
     }
 
+    this.isLaunched.set(false);
     this.timeLeft.set({
       days: Math.floor(diff / (1000 * 60 * 60 * 24)),
       hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
