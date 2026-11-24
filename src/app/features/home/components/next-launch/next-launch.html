@@ -11,7 +11,11 @@
     <div class="flex-1 h-px bg-linear-to-l from-transparent via-cyan-400/50 to-cyan-400/20"></div>
   </div>
 
-  @if (launch().value; as launch) {
+  @if (launch().pending) {
+    <p class="text-center text-cyan-400 text-xs tracking-widest uppercase">
+      Loading launch schedule...
+    </p>
+  } @else if (launch().value; as launch) {
     <p class="text-center text-zinc-400 text-sm tracking-widest uppercase mb-8">
       {{ launch.name }}
     </p>
@@ -65,5 +69,9 @@
         Scheduled for {{ launch.date_utc | date: 'MMMM d, yyyy • HH:mm' }} UTC
       </p>
     }
+  } @else {
+    <p class="text-center text-zinc-500 text-sm">
+      The next launch schedule is currently unavailable.
+    </p>
   }
 </div>
