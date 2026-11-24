@@ -1,4 +1,4 @@
-import { catchError, map, Observable, of, startWith } from 'rxjs';
+import { catchError, map, Observable, of, startWith, timeout } from 'rxjs';
 
 export interface Suspense<T> {
   pending: boolean;
@@ -10,6 +10,7 @@ export interface Suspense<T> {
 
 export function createSuspense<T>(obs$: Observable<T>): Observable<Suspense<T>> {
   return obs$.pipe(
+    timeout({ first: 15000 }),
     map((data) => ({
       pending: false,
       hasValue: true,
