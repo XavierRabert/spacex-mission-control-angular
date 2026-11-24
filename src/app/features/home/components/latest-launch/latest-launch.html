@@ -69,6 +69,7 @@
             <a
               [href]="latestLaunch.links.webcast"
               target="_blank"
+              rel="noopener noreferrer"
               spxTechBorder
               [corners]="CornerStyle.ALL"
               borderSize="sm"
@@ -81,4 +82,16 @@
       </div>
     </div>
   </div>
+} @else {
+  <section class="flex min-h-[70vh] items-center justify-center px-4 text-center">
+    <div class="max-w-2xl space-y-5">
+      <p class="text-cyan-400 text-xs font-bold tracking-[0.3em] uppercase">Mission Control</p>
+      <h1 class="text-5xl md:text-7xl font-black text-white uppercase tracking-tight">
+        EXPLORE THE<br /><span class="text-cyan-400">FINAL FRONTIER</span>
+      </h1>
+      <p class="text-zinc-400">
+        Live mission data is temporarily unavailable. Please check back soon.
+      </p>
+    </div>
+  </section>
 }
