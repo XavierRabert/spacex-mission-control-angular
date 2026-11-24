@@ -26,6 +26,7 @@ export interface Ll2Launch {
   agency_launch_attempt_count?: number | null;
   orbital_launch_attempt_count?: number | null;
   failreason?: string | null;
+  video_url?: string | null;
   window_start?: string | null;
   window_end?: string | null;
 }
@@ -54,6 +55,8 @@ const precisionFromLl2 = (name?: string): LaunchDatePrecision => {
   if (!name) return 'day';
   const value = name.toLowerCase();
   if (value.includes('minute') || value.includes('second')) return 'hour';
+  if (value.includes('quarter')) return 'quarter';
+  if (value.includes('half')) return 'half';
   if (value.includes('month')) return 'month';
   if (value.includes('year')) return 'year';
   return 'day';
@@ -69,7 +72,7 @@ export function mapLl2Launch(source: Ll2Launch, upcoming: boolean): Launch {
       ? false
       : null;
   const image = source.image?.image_url || source.image?.thumbnail_url || null;
-  const video = source.mission?.vid_urls?.[0]?.url || null;
+  const video = source.video_url || source.mission?.vid_urls?.[0]?.url || null;
   const article = source.mission?.info_urls?.[0]?.url || null;
 
   return {
