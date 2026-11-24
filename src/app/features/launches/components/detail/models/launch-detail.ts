@@ -19,48 +19,21 @@ export function getMissionStats(
   rocketName: string,
 ): MissionStat[] {
   if (!launch) return [];
-
   return [
-    { label: 'ROCKET', value: rocketName },
+    { label: 'ROCKET', value: rocketName || 'N/A' },
     { label: 'LAUNCHPAD', value: launchpadName || 'N/A' },
-    { label: 'CORES', value: launch.cores?.length || 0 },
-    { label: 'PAYLOADS', value: launch.payloads?.length || 0 },
+    { label: 'STATUS', value: launch.status || 'Unknown' },
+    { label: 'DATE PRECISION', value: launch.date_precision.toUpperCase() },
   ];
 }
 
 export function getLaunchResources(launch: Launch | undefined): LaunchResource[] {
   if (!launch?.links) return [];
-
   const allResources: LaunchResource[] = [
-    {
-      key: 'article',
-      url: launch.links.article || '',
-      icon: '📰',
-      title: 'Article',
-      subtitle: 'Read more',
-    },
-    {
-      key: 'wikipedia',
-      url: launch.links.wikipedia || '',
-      icon: '📖',
-      title: 'Wikipedia',
-      subtitle: 'Learn more',
-    },
-    {
-      key: 'presskit',
-      url: launch.links.presskit || '',
-      icon: '📋',
-      title: 'Press Kit',
-      subtitle: 'Download',
-    },
-    {
-      key: 'webcast',
-      url: launch.links.webcast || '',
-      icon: '🎥',
-      title: 'Webcast',
-      subtitle: 'Watch video',
-    },
+    { key: 'article', url: launch.links.article || '', icon: '📰', title: 'Article', subtitle: 'Read more' },
+    { key: 'wikipedia', url: launch.links.wikipedia || '', icon: '📖', title: 'Wikipedia', subtitle: 'Learn more' },
+    { key: 'presskit', url: launch.links.presskit || '', icon: '📋', title: 'Press Kit', subtitle: 'Download' },
+    { key: 'webcast', url: launch.links.webcast || '', icon: '🎥', title: 'Webcast', subtitle: 'Watch video' },
   ];
-
   return allResources.filter((resource) => resource.url);
 }
