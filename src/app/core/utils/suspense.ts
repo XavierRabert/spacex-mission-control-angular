@@ -68,5 +68,5 @@ export const getSuspensifyInitialValues = <T>(value: T) => ({
   hasValue: true,
   hasError: false,
   value,
-  error: undefined,
+  error: null,
 });
